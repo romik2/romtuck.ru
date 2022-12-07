@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import Home from './route/Home/Home';
 import Experience from './route/Experience/Experience';
 import Education from './route/Education/Education';
@@ -8,23 +8,44 @@ import PreLoader from './component/PreLoader/PreLoader';
 import { BrowserRouter as Router, Route , Routes } from "react-router-dom";
 
 function App() {  
+  const url = 'ws://192.168.1.157:4567';
+  const [certificate, setCertificate] = useState([]);
+  const [server, setServer] = useState(new WebSocket(url));
+  const [work, setWork] = useState([]);
+  const [experience, setExperience] = useState([]);
+  const [education, setEducation] = useState([]);
 
-  useEffect(() => {
+  server.onopen = () => { 
     document.getElementById("loader").hidden = true;
-  });
+    document.getElementById("content").hidden = false;
+    document.getElementById("error").hidden = true;
+  };
+
+  server.onmessage = (message) => {
+    
+  };
+
+  server.onerror = () => {
+    document.getElementById("error").hidden = false;
+    document.getElementById("loader").hidden = false;
+    document.getElementById("content").hidden = true;
+    setServer(new WebSocket(url));
+  };
 
   return (
     <>
       <PreLoader/>
+      <div id='content' hidden>
       <Router>
           <Routes>
-              <Route path="/" element={<Home/>} />
-              <Route path="/education" element={<Education/>} />
-              <Route path="/experience" element={<Experience/>} />
-              <Route path="/certificate" element={<Certificate/>} />
-              <Route path="*" element={<Home/>} />
+              <Route exac path="/" element={<Home data={work}/>} />
+              <Route exac path="/education" element={<Education data={education}/>} />
+              <Route exac path="/experience" element={<Experience data={experience}/>} />
+              <Route exac path="/certificate" element={<Certificate data={certificate}/>} />
+              <Route exac path="*" element={<Home/>} />
           </Routes>
       </Router>
+      </div>
     </>
   );
 }

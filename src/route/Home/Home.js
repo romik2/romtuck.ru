@@ -8,10 +8,10 @@ import Container from 'react-bootstrap/Container';
 import { Github, Telegram } from 'react-bootstrap-icons';
 import works from '../../data/work.json';
 
-function Home() {
-    console.log(works.lenght);
-  return (
-    <>
+function Home({data}) {
+
+    return (
+        <>
         <Menu/>
         <Container className='container_title'>
             <Row>
