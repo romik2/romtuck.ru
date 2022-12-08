@@ -8,9 +8,9 @@ const config = require('./config.json');
 
 if (config.protocol == 'wss') {
     const server = https.createServer({
-        cert: fs.readFileSync(`${config.ssh_dirname}`),
-        key: fs.readFileSync(`${config.ssh_dirname}`),
-        ca: fs.readFileSync(`${config.ssh_dirname}`)
+        cert: fs.readFileSync(`${config.cert_dirname}`),
+        key: fs.readFileSync(`${config.key_dirname}`),
+        ca: fs.readFileSync(`${config.ca_dirname}`)
     });
     const wsServer = new WebSocket.Server({ server, port: config.port});
 
