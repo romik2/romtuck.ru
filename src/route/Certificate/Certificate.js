@@ -6,7 +6,6 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 
 function Certificate({data}) {  
-
     return (
         <>
             <Menu/>
@@ -39,7 +38,6 @@ function Certificate({data}) {
             }
         </>
     );
-  }
+}
   
 export default Certificate;
-  

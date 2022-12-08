@@ -5,11 +5,9 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Menu from '../../component/Navbar/Menu';
 import Container from 'react-bootstrap/Container';
-import { Github, Telegram } from 'react-bootstrap-icons';
-import works from '../../data/work.json';
+import { Github, Telegram, Globe2 } from 'react-bootstrap-icons';
 
 function Home({data}) {
-
     return (
         <>
         <Menu/>
@@ -37,7 +35,7 @@ function Home({data}) {
             </Row>
         </Container>
         {
-            Object.keys(works).length !== 0 ? 
+            Object.keys(data).length !== 0 ? 
             <Container className='container_title'>
                 <Row>
                     <Col className='col-12'>
@@ -48,16 +46,19 @@ function Home({data}) {
                 </Row>
                 <Row>
                     {
-                        works.map(e => (
-                            <Card className='col-lg-5 col-12 mb-5 ms-3 me-3'>
-                                <Card.Img variant="top" src={e.src} />
+                        data.map(e => (
+                            <Card key={e.id} className='col-lg-5 col-12 mb-5 ms-3 me-3'>
+                                <Card.Img variant="top" src={e.src_image} />
                                 <Card.Body>
                                     <Card.Title>{e.title}</Card.Title>
                                     <Card.Text>
                                         {e.description}
                                     </Card.Text>
-                                    <a href={e.github} className='me-2 float-end'>
+                                    <a href={e.url_github} className='me-2 float-end'>
                                         <Github color="black" size={35} />
+                                    </a>
+                                    <a href={e.url_demo} className='me-2 float-end'>
+                                        <Globe2 color="black" size={35} />
                                     </a>
                                 </Card.Body>
                             </Card>

@@ -7,10 +7,12 @@ import Certificate from './route/Certificate/Certificate';
 import PreLoader from './component/PreLoader/PreLoader';
 import { BrowserRouter as Router, Route , Routes } from "react-router-dom";
 
-function App() {  
-  const url = 'ws://192.168.1.157:4567';
+function App({server}) {
+  function capitalize(str) {
+    return `${str.charAt(0).toUpperCase()}${str.slice(1)}`;
+   }
+  
   const [certificate, setCertificate] = useState([]);
-  const [server, setServer] = useState(new WebSocket(url));
   const [work, setWork] = useState([]);
   const [experience, setExperience] = useState([]);
   const [education, setEducation] = useState([]);
@@ -22,14 +24,8 @@ function App() {
   };
 
   server.onmessage = (message) => {
-    
-  };
-
-  server.onerror = () => {
-    document.getElementById("error").hidden = false;
-    document.getElementById("loader").hidden = false;
-    document.getElementById("content").hidden = true;
-    setServer(new WebSocket(url));
+    var jsonData = JSON.parse(message.data);
+    eval(`set${capitalize(jsonData.table)}(jsonData.row)`);
   };
 
   return (
@@ -38,11 +34,11 @@ function App() {
       <div id='content' hidden>
       <Router>
           <Routes>
-              <Route exac path="/" element={<Home data={work}/>} />
-              <Route exac path="/education" element={<Education data={education}/>} />
-              <Route exac path="/experience" element={<Experience data={experience}/>} />
-              <Route exac path="/certificate" element={<Certificate data={certificate}/>} />
-              <Route exac path="*" element={<Home/>} />
+              <Route path="/" element={<Home data={work}/>} />
+              <Route path="/education" element={<Education data={education}/>} />
+              <Route path="/experience" element={<Experience data={experience}/>} />
+              <Route path="/certificate" element={<Certificate data={certificate}/>} />
+              <Route path="*" element={<Home/>} />
           </Routes>
       </Router>
       </div>
