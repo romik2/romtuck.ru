@@ -1,22 +1,49 @@
 const WebSocket = require('ws');
-const wsServer = new WebSocket.Server({port: 4567});
+const fs = require('fs');
+const https = require('https');
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./database.sql.local');
 const tablesName = ['work', 'education', 'experience', 'certificate'];
+const config = require('./config.json');
 
-wsServer.on('connection', function (client, req) {
-    console.log(`Новый пользователь: ${req.socket.remoteAddress}`);
+if (config.protocol == 'wss') {
+    const server = https.createServer({
+        cert: fs.readFileSync(`${config.ssh_dirname}`),
+        key: fs.readFileSync(`${config.ssh_dirname}`),
+        ca: fs.readFileSync(`${config.ssh_dirname}`)
+    });
+    const wsServer = new WebSocket.Server({ server, port: config.port});
 
-    sendMessages(client);
+    wsServer.on('connection', function (client, req) {
+        console.log(`Новый пользователь: ${req.socket.remoteAddress}`);
     
-    setInterval(function () {
-        sendMessages(client)
-    }, 6000);
+        sendMessages(client);
+        
+        setInterval(function () {
+            sendMessages(client)
+        }, 6000);
+    
+        client.on('close', function() {
+            console.log(`Пользователь отключился: ${req.socket.remoteAddress}`);
+        })
+    });
+} else {
+    const wsServer = new WebSocket.Server({port: config.port});
 
-    client.on('close', function() {
-        console.log(`Пользователь отключился: ${req.socket.remoteAddress}`);
-    })
-});
+    wsServer.on('connection', function (client, req) {
+        console.log(`Новый пользователь: ${req.socket.remoteAddress}`);
+    
+        sendMessages(client);
+        
+        setInterval(function () {
+            sendMessages(client)
+        }, 6000);
+    
+        client.on('close', function() {
+            console.log(`Пользователь отключился: ${req.socket.remoteAddress}`);
+        })
+    });
+}
 
 function sendMessages(client) {
     tablesName.forEach(name => {
