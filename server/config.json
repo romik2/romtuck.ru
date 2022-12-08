@@ -1,0 +1,7 @@
+{
+    "protocol": "wss",
+    "port": 4567,
+    "cert_dirname": "",
+    "key_dirname": "",
+    "ca_dirname": ""
+}
