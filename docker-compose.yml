@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+###> server ###
+  server:
+    container_name: server
+    build:
+      context: .
+      dockerfile: ./server.dockerfile
+    ports:
+      - '4567:4567'
+###< server ###
+###> frontend ###
+  frontend:
+    container_name: frontend
+    build:
+      context: .
+      dockerfile: ./frontend.dockerfile
+    ports:
+      - '3001:3000'
+###< frontend ###
