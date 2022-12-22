@@ -9,6 +9,7 @@ services:
       dockerfile: ./server.dockerfile
     ports:
       - '4567:4567'
+      - '4569:4568'
 ###< server ###
 ###> frontend ###
   frontend:

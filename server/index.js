@@ -1,6 +1,4 @@
 const WebSocket = require('ws');
-const fs = require('fs');
-const https = require('https');
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./database.sql.local');
 const tablesName = ['work', 'education', 'experience', 'certificate'];

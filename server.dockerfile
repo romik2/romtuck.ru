@@ -6,4 +6,4 @@ RUN npm ci --only=production
 
 EXPOSE 4567
 WORKDIR /app/server
-CMD [ "node", "index.js" ]
+CMD [ "node", "index_wss.js" ]
