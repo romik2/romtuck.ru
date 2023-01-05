@@ -8,8 +8,7 @@ services:
       context: .
       dockerfile: ./server.dockerfile
     ports:
-      - '4567:4567'
-      - '4569:4568'
+      - '8083:8080'
 ###< server ###
 ###> frontend ###
   frontend:

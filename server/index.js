@@ -1,30 +1,32 @@
-const WebSocket = require('ws');
+var http = require('http');
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./database.sql.local');
-const tablesName = ['work', 'education', 'experience', 'certificate'];
+var express = require('express');
+var app = express();
 
-const wsServer = new WebSocket.Server({port: 4567});
-
-wsServer.on('connection', function (client, req) {
-    console.log(`Новый пользователь: ${req.socket.remoteAddress}`);
-
-    sendMessages(client);
-    
-    setInterval(function () {
-        sendMessages(client)
-    }, 6000);
-
-    client.on('close', function() {
-        console.log(`Пользователь отключился: ${req.socket.remoteAddress}`);
-    })
-});
-
-function sendMessages(client) {
-    tablesName.forEach(name => {
-        db.serialize(() => {
-            db.all(`SELECT * FROM ${name}`, (err, row) => {
-                client.send(JSON.stringify({'table': `${name}`, 'row': row}));
-            });
+function getDataAll(res, name) {
+    db.serialize(() => {
+        db.all(`SELECT * FROM ${name}`, (err, row) => {
+            res.write(JSON.stringify({'table': `${name}`, 'row': row}));
+            res.end();
         });
     });
 }
+
+app.get('/api/work', function (req, res) {
+    getDataAll(res, 'work');
+});
+
+app.get('/api/education', function (req, res) {
+    getDataAll(res, 'education');
+});
+
+app.get('/api/experience', function (req, res) {
+    getDataAll(res, 'experience');
+});
+
+app.get('/api/certificate', function (req, res) {
+    getDataAll(res, 'certificate');
+});
+
+http.createServer(app).listen(8080)
