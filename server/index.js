@@ -7,7 +7,9 @@ var app = express();
 function getDataAll(res, name) {
     db.serialize(() => {
         db.all(`SELECT * FROM ${name}`, (err, row) => {
-            res.write(JSON.stringify({'table': `${name}`, 'row': row}));
+            res.setHeader('Access-Control-Allow-Origin', '*');
+            res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+            res.write(JSON.stringify(row));
             res.end();
         });
     });

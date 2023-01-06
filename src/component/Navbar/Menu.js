@@ -10,7 +10,7 @@ function Menu() {
         <Link className="nav-link" to="/" title="Главная"><Navbar.Brand className='h1'>Главная</Navbar.Brand></Link>
         <Link className="nav-link" to="/education" title="Образование"><Navbar.Brand className='h1'>Образование</Navbar.Brand></Link>
         <Link className="nav-link" to="/experience" title="Опыт работы"><Navbar.Brand className='h1'>Опыт работы</Navbar.Brand></Link>
-        <Link className="nav-link" to="/certificate" title="Электронные сертификаты"><Navbar.Brand className='h1'>Электронные сертификаты</Navbar.Brand></Link>
+        <Link className="nav-link" to="/certificate" title="Электронные сертификаты"><Navbar.Brand className='h1'>Сертификаты</Navbar.Brand></Link>
       </Container>
     </Navbar>
   );
