@@ -5,6 +5,6 @@ export default async function general(method, timeout = 1000) {
         setTimeout(() => controller.abort(), timeout);
         params = Object.assign(params, {signal: controller.signal});
     }
-    const api = await fetch(`http://127.0.0.1:8080/${method}`, params);
+    const api = await fetch(`/${method}`, params);
     return api.json();
 }
