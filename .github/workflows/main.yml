@@ -1,0 +1,8 @@
+name: main
+on: workflow_dispatch
+jobs:
+  print:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Console
+      - run: echo Hello
